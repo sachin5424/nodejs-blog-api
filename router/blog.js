@@ -2,83 +2,13 @@ const express = require('express')
 const router = express.Router()
 var path = require('path')
 const blog = require('../models/blog')
-const multer = require('multer');
+const controller_blog = require('../controller/blog')
+const upload = require('../middleware/milter')
+const validator = require('../middleware/express.validator')
 
-// ------------ multer ------------------
-const storage = multer.diskStorage({
-    destination:'./upload/images/',
-   
-    filename:(req,file,cd)=>{
-        return cd(null,`${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`)
-    }
-})
-const upload = multer({
-    storage:storage,
-    limit:{fileSize:1}
-})
-// --------------- End multer ---------------
+router.post('/add',upload.single('Image'),validator.blog_add,controller_blog.add)
 
-
-router.post('/add',upload.single('Image'),(req,res)=>{
-    var title = req.body.title;
-    if(title.length < 3){
-        return res.status(400).json({
-            messsage: "title length 3 characters "
-        })
-    }
-    var image = req.file.path;
-    var categories = req.body.categories; 
-    var description = req.body.Description;
-    if(!categories){
-        return res.status(400).json({
-            messsage:"categorie required"
-        })
-    }
-    if(!description){
-        return res.status(400).json({
-            messsage:"place valid  key "
-        })
-    }
-    var active = req.body.Active;
-    if(!active){
-        return res.status(400).json({
-            messsage:"place valid  key "
-        })
-    }
-    var featured = req.body.Featured
-    if(!featured){
-        return res.status(400).json({
-            messsage:"place valid  key "
-        })
-    }
-    const kk = new blog({
-        Title:title,
-        Image:image,
-        categories:categories,
-        Description:description,
-        Active:active,
-        Featured:featured,
-    }) 
-    kk.save()
-    return res.json({
-       messsage:"successfully Item Create",
-       success:1,
-       profile:`http://localhost:3002/${req.file.filename}`
-   })
-})
-
-router.get('/list',async(req,res)=>{
-    try {
-     
-        const all_list = await blog.find().populate('categories')
-      return res.status(200).send(all_list)
-    } catch (error) {
-        res.status(500).send(error)
-    }
- })
- 
-
-
+router.get('/list',controller_blog.list)
 
 router.delete('/delete/:id',async(req,res)=>{
     try {
