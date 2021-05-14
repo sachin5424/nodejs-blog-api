@@ -10,17 +10,7 @@ router.post('/add',upload.single('Image'),validator.blog_add,controller_blog.add
 
 router.get('/list',controller_blog.list)
 
-router.delete('/delete/:id',async(req,res)=>{
-    try {
-        var _id = req.params.id
-        const delete_blog = await blog.findByIdAndDelete(_id)
-        return res.status(200).json({
-            messsage:"successfully Item Delete"
-        })
-    } catch (error) {
-        res.status(500).send(error)
-    }
- })
+router.delete('/delete/:id',controller_blog.delete)
 
  router.put('/update/:id',upload.single('Image'),(req,res)=>{
     console.log(req.body);
@@ -101,27 +91,8 @@ router.delete('/delete/:id',async(req,res)=>{
 //    })
 })
 
-router.get('/details/:id',async(req,res)=>{
-   try {
-       _id=req.params.id;
-       console.log(_id)
-       const item = await blog.findById(_id)
-       res.status(200).send(item)
+router.get('/details/:id',controller_blog.single_list)
 
-   } catch (error) {
-       res.status(500).send(error)
-   }
-})
-
-router.get('/categroies/:id',async(req,res)=>{
-    try {
-        console.log(req.params.id)
-         var _id = req.params.id
-         const find_cat_post = await blog.find({categories:_id})
-        return res.status(200).send(find_cat_post)
-    } catch (error) {
-        res.status(500).send(error)
-    }
-})
+router.get('/categroies/:id',)
 
 module.exports = router
