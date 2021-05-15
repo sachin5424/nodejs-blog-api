@@ -4,12 +4,13 @@ const router = express.Router();
 const bodyparser = require('body-parser')
 const cors = require('cors')
 const Port = 3002
-const path = require('path')
+
 const mongoose = require('mongoose');
 const mongose_port = 'mongodb://localhost:27017/blogs';
-const multer = require('multer');
+
 const categories_router = require('./router/categories')
 const blog_router = require('./router/blog')
+const user_router = require('./router/user')
 // --------------- app -------------------
 app.use(bodyparser.json());
 app.use(cors());
@@ -36,5 +37,6 @@ mongoose.connect(mongose_port,{
 app.use('/categories',categories_router)
 app.use('/blog',blog_router)
 app.use('/contact',contect_router)
+app.use('/user',user_router)
 
 app.listen(Port)

@@ -15,5 +15,12 @@ module.exports = {
         check('email','Place valid Email ').isEmail(),
         check('messsage',' min length 10 characters name').isLength({min:10}),
 
-    ]
+    ],
+    User:[
+
+             check('Username','min length 3 characters name').isLength({min:3}),
+             check('Email','min length 3 characters name').isEmail(),
+             check('Phone','min length 3 characters name').isNumeric(),
+           
+         ]
 }
