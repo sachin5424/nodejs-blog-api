@@ -8,7 +8,7 @@ exports.add =  (req,res)=>{
             message:errors.msg,
             errors:errors
         })
-        console.log(errors);
+        
     }
     else{
         console.log(req.file);

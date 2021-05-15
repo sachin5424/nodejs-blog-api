@@ -24,7 +24,7 @@ const categories =require('./models/categories')
 const blog = require('./models/blog')
 const contect =require('./models/contect')
 const contect_router = require('./router/contact')
-
+const jwt_valid  = require('./middleware/jwt.token')
 
 mongoose.connect(mongose_port,{
     useCreateIndex:true,
@@ -34,7 +34,7 @@ mongoose.connect(mongose_port,{
     
 });
 
-app.use('/categories',categories_router)
+app.use('/categories',jwt_valid,categories_router)
 app.use('/blog',blog_router)
 app.use('/contact',contect_router)
 app.use('/user',user_router)

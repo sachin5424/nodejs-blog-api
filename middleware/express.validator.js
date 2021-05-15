@@ -21,6 +21,7 @@ module.exports = {
              check('Username','min length 3 characters name').isLength({min:3}),
              check('Email','min length 3 characters name').isEmail(),
              check('Phone','min length 3 characters name').isNumeric(),
+             check('Password','ss').isLength({min:3})
            
          ]
 }

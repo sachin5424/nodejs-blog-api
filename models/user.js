@@ -16,7 +16,7 @@ const Users = mongoose.Schema({
        
     },
     Phone:{
-        type:Number,
+        type:String,
         required: true
     },
     Phone_Verfiy:{
@@ -35,7 +35,7 @@ const Users = mongoose.Schema({
     },
     Password:{
         type:String,
-       required:true
+        required:true
     },
     created_at    : { type: Date, required: true, default: Date.now() }
   
